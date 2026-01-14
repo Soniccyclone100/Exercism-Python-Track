@@ -1,0 +1,40 @@
+Didn't plan on what to write here so this will just be an info dump on some tips:
+
+#### Understand the Definitions
+The aliquot sum is the sum of all positive divisors of a number, excluding the number itself. 
+- **Perfect**: Aliquot sum = Number (e.g., 6: 1+2+3 = 6).
+- **Abundant**: Aliquot sum > Number (e.g., 12: 1+2+3+4+6 = 16).
+- **Deficient**: Aliquot sum < Number (e.g., 8: 1+2+4 = 7). 
+
+#### Helpful Python Tools
+- **Modulo Operator (%)**: Use number % i == 0 to check if i is a divisor.
+- **Range Function (range)**: Use range(1, (number // 2) + 1) to generate potential divisors efficiently.
+- **Sum Function (sum)**: If you collect your divisors in a list or use a generator expression, Python's built-in sum() can calculate the total in one line. 
+
+#### The Logic Flow:
+Instead of always trying to return everything in one line, break it down into these steps:
+Step 1: Calculate the aliquot sum (the sum of all divisors excluding the number itself).
+Step 2: Compare that sum to the original number.
+Step 3: Use if, elif, and else to return the specific classification string. 
+
+#### Missing the Divisor "1"
+Proper divisors (for the aliquot sum) always include 1. Your loop starts at 2, which means you will always be missing 1 from your total.
+- Correction: Change your loop to range(1, (number // 2) + 1)
+
+Alternative "**Exercism Style**":
+Many Python users on Exercism use a list comprehension to do the sum in one line, which avoids having to initialize a variable. It looks like this: [**aliquot_sum = sum(i for i in range(1, number) if number % i == 0)**]
+
+#### Add Input Validation
+The tests specifically look for a **ValueError** with this exact message:
+"_Classification is only possible for positive integers._". 
+
+Add this at the top of your function:
+'''
+if number < 1:
+    raise ValueError("Classification is only possible for positive integers.")
+'''
+
+#### Why this Fixes Your Errors
+- **Early Exit**: When the test calls classify(0), Python hits the if number < 1 line and immediately "raises" the error.
+- **Exact Message**: The test suite checks if the error message matches exactly. Your message "Classification is only possible for positive integers." must have the correct spelling and punctuation.
+- **Indentation**: Ensure the if number < 1 is indented exactly one level (4 spaces) inside the function. 
